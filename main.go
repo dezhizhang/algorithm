@@ -6,50 +6,75 @@ import (
 	"os"
 )
 
-type Queue struct {
+type CircleQueue struct {
 	maxSize int
 	array   [4]int
-	front   int // 指向队列首位
-	rear    int // 表示指向队列的尾部
+	head    int // 指向队列队首
+	tail    int // 指向队尾
 }
 
-//添加数据到队列中
+// 判断环形队列是否为满
 
-func (this *Queue) AddQueue(val int) (err error) {
-	if this.rear == this.maxSize-1 {
+func (this *CircleQueue) IsFull() bool {
+	return (this.tail+1)%this.maxSize == this.head
+}
+
+// 判断环形队列是否为空
+
+func (this *CircleQueue) IsEmpty() bool {
+	return this.tail == this.head
+}
+
+// 判断环形队列有多少个值
+
+func (this *CircleQueue) Size() int {
+	return (this.tail + this.maxSize - this.head) % this.maxSize
+}
+
+// 入队列
+
+func (this *CircleQueue) Push(val int) error {
+	if this.IsFull() {
 		return errors.New("队列以满")
 	}
-	this.rear++
-	this.array[this.rear] = val
-	return
+	this.array[this.tail] = val
+	this.tail = (this.tail + 1) % this.maxSize
+	return nil
 }
 
-// 队列中取数据
+// 出队
 
-func (this *Queue) GetQueue()(val int,err error) {
-	//先判断队列是否为空
-	if this.rear == this.front {
-		return -1,errors.New("队列为空")
+func (this *CircleQueue) Pop() (val int, err error) {
+	if this.IsEmpty() {
+		return -1, errors.New("队列为空")
 	}
-	this.front++
-	val = this.array[this.front]
-	return val,nil
+	val = this.array[this.head]
+	this.head = (this.head + 1) % this.maxSize
+	return val, nil
 }
 
-// 显示数据
+// 显示队列
 
-func (this *Queue) ShowQueue() {
-	for i := this.front + 1; i <= this.rear; i++ {
-		fmt.Printf("array[%d]=%d\t", i, this.array[i])
+func (this *CircleQueue) Show() {
+	size := this.Size()
+	if this.IsEmpty() {
+		fmt.Println("队列为空")
+		return
+	}
+
+	tempHead := this.head
+	for i := tempHead; i < size; i++ {
+		fmt.Printf("array[%d]=%d\t", tempHead, this.array[tempHead])
+		tempHead = (tempHead + 1) % this.maxSize
 	}
 }
 
 func main() {
 
-	queue := &Queue{
+	queue := &CircleQueue{
 		maxSize: 5,
-		front: -1,
-		rear: -1,
+		head:    0,
+		tail:    0,
 	}
 
 	var key string
@@ -61,27 +86,27 @@ func main() {
 		fmt.Println("3.输入show表示显示队列")
 		fmt.Println("4.输入exit表示退出")
 
-	 	fmt.Scanln(&key)
+		fmt.Scanln(&key)
 		switch key {
 		case "add":
 			fmt.Println("输入你要入队列数")
 			fmt.Scanln(&val)
-			err := queue.AddQueue(val)
+			err := queue.Push(val)
 			if err != nil {
 				fmt.Println(err.Error())
-				return
+				break
 			}
 			fmt.Println("加入队列成功")
 		case "get":
-			value,err := queue.GetQueue()
+			value, err := queue.Pop()
 			if err != nil {
 				fmt.Println(err.Error())
-				return
+				break
 			}
 
-			fmt.Printf("value=%v",value)
+			fmt.Printf("value=%v", value)
 		case "show":
-			queue.ShowQueue()
+			queue.Show()
 		case "exit":
 			os.Exit(0)
 		}
