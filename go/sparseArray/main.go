@@ -33,4 +33,17 @@ func main()  {
 		fmt.Println()
 	}
 
+	//恢复原始数据
+	var chessMap2[11][11]int
+	for _,node := range slice {
+		chessMap2[node.row][node.col] = node.val
+	}
+
+	for _,v := range chessMap2 {
+		for _,v2 := range v {
+			fmt.Printf("%v\t",v2)
+		}
+		fmt.Println()
+	}
+
 }
