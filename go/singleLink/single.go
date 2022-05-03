@@ -1,4 +1,4 @@
-package main
+package singleLink
 
 import "fmt"
 
@@ -24,54 +24,6 @@ func InsertHeroNode(head *HeroNode,newHeroNode *HeroNode)  {
 	temp.next= newHeroNode
 
 }
-
-func InsertHeroNode2(head *HeroNode,newHeroNode *HeroNode)  {
-	temp := head
-	flag := true
-
-	for {
-		if temp.next == nil {
-			break
-		} else if temp.next.no > newHeroNode.no {
-			break
-		}else if temp.next.no == newHeroNode.no {
-			flag = false
-			break
-		}
-		temp = temp.next
-	}
-
-	if !flag  {
-		fmt.Println("以存在当前节点",newHeroNode.no)
-		return
-	}
-
-	newHeroNode.next = temp.next
-	temp.next = newHeroNode
-}
-
-// 删除节
-
-func DelHeroNode(head *HeroNode,no int)  {
-	temp := head
-
-	flag := false
-	for {
-		if temp.next == nil {
-			break
-		}else if temp.next.no == no {
-			flag = true
-			break
-
-		}
-		temp = temp.next
-	}
-	if flag {
-		temp.next = temp.next.next
-	}
-}
-
-
 // 显示所有节点
 
 func  ListHeroNode(head *HeroNode)  {
@@ -105,9 +57,8 @@ func main() {
 		name: "卢俊义",
 		nickname: "及时说",
 	}
-	InsertHeroNode2(head,hero2)
-	InsertHeroNode2(head,hero1)
-	DelHeroNode(head,2)
 
+	InsertHeroNode(head,hero1)
+	InsertHeroNode(head,hero2)
 	ListHeroNode(head)
 }
