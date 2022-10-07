@@ -1,7 +1,8 @@
-# 数据结构与算法
+package src.com.xiaozhi.queue;
 
-### 队列
-```java
+
+import java.util.Scanner;
+
 public class Queue {
   public static void main(String[] args) {
     ArrayQueue queue = new ArrayQueue(3);
@@ -114,4 +115,3 @@ class ArrayQueue {
   }
 
 }
-```
