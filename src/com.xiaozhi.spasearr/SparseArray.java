@@ -12,5 +12,14 @@ public class SparseArray {
       }
       System.out.println();
     }
+    int total = 0;
+    for(int [] row:chessArr) {
+      for(int data:row) {
+        if(data!=0) {
+          total++;
+        }
+      }
+    }
+    System.out.println(total);
   }
 }
