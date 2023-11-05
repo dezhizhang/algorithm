@@ -1,11 +1,10 @@
-package src.com.xiaozhi.queue;
-
+package src.com.xiaozhicloud.queue;
 
 import java.util.Scanner;
 
-public class Queue {
+public class CircleQueue {
   public static void main(String[] args) {
-    ArrayQueue queue = new ArrayQueue(3);
+    CircleArrayQueue queue = new CircleArrayQueue(3);
     char key = ' ';
     Scanner scanner = new Scanner(System.in);
     boolean loop = true;
@@ -53,57 +52,66 @@ public class Queue {
   }
 }
 
-class ArrayQueue{
+class CircleArrayQueue {
   private int maxSize; //表示数组的最大容量
   private int front; //队列头
   private int rear; //队表尾
   private int arr[]; //用于存放数据
 
-  public ArrayQueue(int maxSize) {
+  public CircleArrayQueue(int maxSize) {
     this.maxSize = maxSize;
     this.arr = new int[maxSize];
-    this.front = -1;
-    this.rear = -1;
   }
+
   // 判断队列是满
   public boolean isFull() {
-    return rear == maxSize - 1;
+    return (rear + 1) % this.maxSize == this.front;
   }
+
   // 判断队列是否为空
   public boolean isEmpty() {
     return rear == front;
   }
+
   //添加数据到队列中
   public void addQueue(int n) {
-    if(isEmpty()) {
+    if (isFull()) {
       System.out.printf("队列已满，不能加入数据");
       return;
     }
-    this.rear++;
-    this.arr[this.rear] = n;
+    this.arr[rear] = n;
+    rear = (rear + 1) % maxSize;
   }
 
   // 获取队列的数据
   public int getQueue() {
-    if(isEmpty()) {
+    if (isEmpty()) {
       throw new RuntimeException("队列为空不能取数据");
     }
-    this.front++;
-    return this.arr[this.front];
+    int value = arr[this.front];
+    this.front = (this.front + 1) % this.maxSize;
+    return value;
   }
+
   // 显示队列的所有数据
   public void showQueue() {
-    if(isEmpty()) {
+    if (isEmpty()) {
       System.out.println("队表为空");
       return;
     }
-    for (int i=0;i < arr.length;i++) {
-      System.out.printf("arr[%d]=%d\n", i, arr[i]);
+    for (int i = this.front; i < this.front + this.size(); i++) {
+      System.out.printf("arr[%d]=%d\n", i % this.maxSize, arr[i % maxSize]);
     }
   }
+
+  // 当前队列的有效个数
+  public int size() {
+    return (this.rear + this.maxSize - this.front) % this.maxSize;
+  }
+
   // 获取列表头数据
-  public int headQueue(){
-    if(isEmpty()) {
+  public int headQueue() {
+    if (isEmpty()) {
       throw new RuntimeException("队列为空");
     }
     return this.arr[this.front + 1];
