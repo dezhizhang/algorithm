@@ -7,9 +7,10 @@ class SingleLinkListDemo {
     HeroNode hero3 = new HeroNode(3,"呈用","智多星");
 
     SingleLinkList singleLinkList = new SingleLinkList();
-    singleLinkList.add(hero1);
-    singleLinkList.add(hero2);
-    singleLinkList.add(hero3);
+    singleLinkList.addByOrder(hero1);
+    singleLinkList.addByOrder(hero3);
+    singleLinkList.addByOrder(hero3);
+    singleLinkList.addByOrder(hero2);
     singleLinkList.list();
 
   }
@@ -26,6 +27,30 @@ class SingleLinkList{
       }
       temp = temp.next;
     }
+    temp.next = heroNode;
+  }
+  // 按顺序加入节点
+  public void addByOrder(HeroNode heroNode) {
+    HeroNode temp = head;
+    boolean flag = false;
+    while (true) {
+      if(temp.next == null) {
+        break;
+      }
+      if(temp.next.no > heroNode.no) {
+        break;
+      }
+      if (temp.next.no == heroNode.no) {
+        flag = true;
+        break;
+      }
+      temp = temp.next;
+    }
+    if(flag) {
+      System.out.printf("准备插入的英雄的编号%d 已存在不能添加",heroNode.no);
+      return;
+    }
+    heroNode.next = temp.next;
     temp.next = heroNode;
   }
   // 显示链表
