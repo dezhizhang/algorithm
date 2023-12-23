@@ -95,6 +95,27 @@ class SingleLinkList{
     }
   }
 
+//  public void  delete(int no) {
+//    HeroNode temp = head;
+//    boolean flag = false; // 标志是否找到待删除节点
+//    while (true) {
+//      if(temp.next == null) {
+//        break;
+//      }
+//      if(temp.next.no == no) {
+//        flag = true;
+//        break;
+//      }
+//      temp = temp.next;
+//    }
+//    // 判断是否找到
+//    if(flag) {
+//      temp.next = temp.next.next;
+//      return;
+//    }
+//    System.out.printf("没有找到要删除的节点%d",no);
+//  }
+
   public void  delete(int no) {
     HeroNode temp = head;
     boolean flag = false; // 标志是否找到待删除节点
@@ -103,17 +124,9 @@ class SingleLinkList{
         break;
       }
       if(temp.next.no == no) {
-        flag = true;
-        break;
+
       }
-      temp = temp.next;
     }
-    // 判断是否找到
-    if(flag) {
-      temp.next = temp.next.next;
-      return;
-    }
-    System.out.printf("没有找到要删除的节点%d",no);
   }
 
 
