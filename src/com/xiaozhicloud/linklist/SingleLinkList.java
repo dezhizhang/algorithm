@@ -1,10 +1,12 @@
 package src.com.xiaozhicloud.linklist;
 
+import java.util.Stack;
+
 class SingleLinkListDemo {
   public static void main(String[] args) {
     HeroNode hero1 = new HeroNode(1, "宋江", "及时");
     HeroNode hero2 = new HeroNode(2,"卢俊义","玉諆房");
-    HeroNode hero3 = new HeroNode(3,"呈用","智多星");
+    HeroNode hero3 = new HeroNode(3,"吴用","智多星");
 
 
     HeroNode newHero2 =  new HeroNode(2,"卢俊义1","玉諆房1");
@@ -13,25 +15,11 @@ class SingleLinkListDemo {
     singleLinkList.addByOrder(hero1);
     singleLinkList.addByOrder(hero3);
     singleLinkList.addByOrder(hero2);
-    singleLinkList.list();
-
-    SingleLinkList.reverseList(singleLinkList.getHead());
-    singleLinkList.list();
-
-//
-//    singleLinkList.update(newHero2);
-//    singleLinkList.delete(1);
 
 
+    SingleLinkList.reversePrint(singleLinkList.getHead());
 
-//    int length = SingleLinkList.getLength(singleLinkList.getHead());
-//    System.out.println(length);
-//
-//    SingleLinkList.reverseList(singleLinkList.getHead());
-//    singleLinkList.list();
-//
-//    HeroNode lastIndexNode = SingleLinkList.findLastIndexNode(singleLinkList.getHead(), 1);
-//    System.out.println(lastIndexNode);
+
 
   }
 }
@@ -197,6 +185,25 @@ class SingleLinkList{
       temp = temp.next;
     }
   }
+
+  // 单链表的逆序打印
+  public static void reversePrint(HeroNode head) {
+    if(head.next == null) {
+      return;
+    }
+    Stack<HeroNode> stack = new Stack<HeroNode>();
+     HeroNode cur = head.next;
+     while (cur != null) {
+       stack.push(cur);
+       cur = cur.next;
+     }
+
+     while (stack.size() > 0) {
+       System.out.println(stack.pop());
+     }
+
+  }
+
 }
 
 
