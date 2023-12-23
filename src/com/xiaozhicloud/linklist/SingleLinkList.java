@@ -16,6 +16,7 @@ class SingleLinkListDemo {
 
 
     singleLinkList.update(newHero2);
+    singleLinkList.delete(1);
 
 
     singleLinkList.list();
@@ -65,8 +66,9 @@ class SingleLinkList{
     temp.next = heroNode;
 
   }
+
   // 修改链表
-  public void update(HeroNode newHeroNode) {
+  public  void update(HeroNode newHeroNode) {
     if(head.next == null) {
       System.out.println("链表为空~");
       return;
@@ -75,28 +77,46 @@ class SingleLinkList{
     boolean flag = false;
     while (true) {
       if(temp == null) {
-        break; // 已经遍历完链表
+        break;
       }
       if(temp.no == newHeroNode.no) {
         flag = true;
         break;
       }
-
       temp = temp.next;
-
     }
-
-    // 根据flag判断是否找到要修改节点
     if(flag) {
       temp.name = newHeroNode.name;
       temp.nickname = newHeroNode.nickname;
     }
-
     if(!flag) {
       System.out.printf("没有找到要修改的节点%d",newHeroNode.no);
+      System.out.println();
     }
-
   }
+
+  public void  delete(int no) {
+    HeroNode temp = head;
+    boolean flag = false; // 标志是否找到待删除节点
+    while (true) {
+      if(temp.next == null) {
+        break;
+      }
+      if(temp.next.no == no) {
+        flag = true;
+        break;
+      }
+      temp = temp.next;
+    }
+    // 判断是否找到
+    if(flag) {
+      temp.next = temp.next.next;
+      return;
+    }
+    System.out.printf("没有找到要删除的节点%d",no);
+  }
+
+
   // 显示链表
   public void list() {
     if(head.next == null) {
