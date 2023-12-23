@@ -23,6 +23,9 @@ class SingleLinkListDemo {
     int length = SingleLinkList.getLength(singleLinkList.getHead());
     System.out.println(length);
 
+    HeroNode lastIndexNode = SingleLinkList.findLastIndexNode(singleLinkList.getHead(), 1);
+    System.out.println(lastIndexNode);
+
   }
 }
 
@@ -109,9 +112,13 @@ class SingleLinkList{
         break;
       }
       if(temp.next.no == no) {
-
+          flag = true;
+          break;
       }
+      temp = temp.next;
+
     }
+    temp.next.next = temp.next;
   }
 
   // 统计链表有效个数
@@ -126,6 +133,26 @@ class SingleLinkList{
       cur = cur.next;
     }
     return  length;
+  }
+
+  // 查看单链表中的倒数第k个节点
+  public static HeroNode findLastIndexNode(HeroNode head,int index) {
+    if(head.next == null) {
+      return null;
+    }
+
+    int size = getLength(head);
+
+    if(index <=0 || index > size) {
+      return null;
+    }
+
+    HeroNode cur = head.next;
+    for(int i=0;i < size - index;i++) {
+      cur = cur.next;
+    }
+    return  cur;
+
   }
 
 
