@@ -13,18 +13,25 @@ class SingleLinkListDemo {
     singleLinkList.addByOrder(hero1);
     singleLinkList.addByOrder(hero3);
     singleLinkList.addByOrder(hero2);
+    singleLinkList.list();
 
+    SingleLinkList.reverseList(singleLinkList.getHead());
+    singleLinkList.list();
 
-    singleLinkList.update(newHero2);
+//
+//    singleLinkList.update(newHero2);
 //    singleLinkList.delete(1);
 
 
-    singleLinkList.list();
-    int length = SingleLinkList.getLength(singleLinkList.getHead());
-    System.out.println(length);
 
-    HeroNode lastIndexNode = SingleLinkList.findLastIndexNode(singleLinkList.getHead(), 1);
-    System.out.println(lastIndexNode);
+//    int length = SingleLinkList.getLength(singleLinkList.getHead());
+//    System.out.println(length);
+//
+//    SingleLinkList.reverseList(singleLinkList.getHead());
+//    singleLinkList.list();
+//
+//    HeroNode lastIndexNode = SingleLinkList.findLastIndexNode(singleLinkList.getHead(), 1);
+//    System.out.println(lastIndexNode);
 
   }
 }
@@ -153,6 +160,25 @@ class SingleLinkList{
     }
     return  cur;
 
+  }
+
+  // 单链表反转
+  public static void reverseList(HeroNode head) {
+      if(head.next == null || head.next.next == null) {
+        return;
+      }
+      HeroNode cur = head.next;
+      HeroNode next = null;
+      HeroNode reverseHead = new HeroNode(0,"","");
+
+      while (cur != null) {
+        next = cur.next;
+        cur.next = reverseHead.next;
+        reverseHead.next = cur;
+        cur = next;
+      }
+
+      head.next = reverseHead.next;
   }
 
 
