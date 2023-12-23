@@ -16,16 +16,22 @@ class SingleLinkListDemo {
 
 
     singleLinkList.update(newHero2);
-    singleLinkList.delete(1);
+//    singleLinkList.delete(1);
 
 
     singleLinkList.list();
+    int length = SingleLinkList.getLength(singleLinkList.getHead());
+    System.out.println(length);
 
   }
 }
 
 class SingleLinkList{
   private HeroNode head = new HeroNode(0,"","");
+
+  public HeroNode getHead() {
+    return head;
+  }
 
   public void add(HeroNode heroNode) {
     HeroNode temp = head;
@@ -95,27 +101,6 @@ class SingleLinkList{
     }
   }
 
-//  public void  delete(int no) {
-//    HeroNode temp = head;
-//    boolean flag = false; // 标志是否找到待删除节点
-//    while (true) {
-//      if(temp.next == null) {
-//        break;
-//      }
-//      if(temp.next.no == no) {
-//        flag = true;
-//        break;
-//      }
-//      temp = temp.next;
-//    }
-//    // 判断是否找到
-//    if(flag) {
-//      temp.next = temp.next.next;
-//      return;
-//    }
-//    System.out.printf("没有找到要删除的节点%d",no);
-//  }
-
   public void  delete(int no) {
     HeroNode temp = head;
     boolean flag = false; // 标志是否找到待删除节点
@@ -127,6 +112,20 @@ class SingleLinkList{
 
       }
     }
+  }
+
+  // 统计链表有效个数
+  public static int getLength(HeroNode head) {
+    if(head.next == null) {
+      return  0;
+    }
+    int length = 0;
+    HeroNode cur = head.next;
+    while (cur != null) {
+      length++;
+      cur = cur.next;
+    }
+    return  length;
   }
 
 
