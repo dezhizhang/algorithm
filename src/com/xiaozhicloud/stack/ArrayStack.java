@@ -98,5 +98,44 @@ class ArrayStack {
       System.out.printf("stack[%d]=%d\n", i, stack[i]);
     }
   }
+  // 返回运算符的优先级
+  public int priority(int oper) {
+    if(oper == '*' || oper == '/') {
+      return 1;
+    }
+    if(oper == '+' || oper == '-') {
+      return 0;
+    }
+    return  -1;
+  }
+  // 判断是否是一个运算符
+  public boolean isOper(char val) {
+    return val == '+' || val == '-' || val == '*' || val == '/';
+  }
+
+  // 计算方法
+  public int cal(int num1,int num2,int oper) {
+    int res = 0;
+    switch (oper){
+      case '+':
+      res = num1 + num2;
+      break;
+      case '-':
+        res = num2 - num1;
+        break;
+      case '*':
+        res = num1 * num2;
+        break;
+      case '/':
+        res = num2 / num1;
+        break;
+      default:
+        break;
+    }
+    return  res;
+  }
+
+
+
 
 }
