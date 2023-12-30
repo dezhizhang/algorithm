@@ -60,6 +60,30 @@ class BinaryTree {
     this.root.postOrder();
   }
 
+  // 前序查找
+  public HeroNode preOrderSearch(int no) {
+    if(root == null) {
+      return null;
+    }
+    return root.postOrderSearch(no);
+  }
+
+  // 中序查找
+  public HeroNode infixOrderSearch(int no) {
+    if(root == null) {
+      return null;
+    }
+    return root.infixOrderSearch(no);
+  }
+
+  // 后序查找
+  public HeroNode postOrderSearch(int no) {
+    if(root == null) {
+      return null;
+    }
+    return root.postOrderSearch(no);
+  }
+
 }
 
 
@@ -137,6 +161,73 @@ class HeroNode {
       this.right.postOrder();
     }
     System.out.println(this);
+  }
+
+  // 前序遍历查找
+  public HeroNode preOrderSearch(int no) {
+    if (this.no == no) {
+      return this;
+    }
+    HeroNode curNode = null;
+    if (this.left != null) {
+      curNode = this.left.preOrderSearch(no);
+    }
+    if (curNode != null) {
+      return curNode;
+    }
+    if (this.right != null) {
+      curNode = this.right.preOrderSearch(no);
+    }
+    return curNode;
+  }
+
+  // 中序遍历查找
+  public HeroNode infixOrderSearch(int no) {
+    HeroNode curNode = null;
+    if(this.left == null) {
+      curNode = this.left.infixOrderSearch(no);
+    }
+
+    if(curNode != null) {
+      return curNode;
+    }
+
+    if(this.no == no) {
+      return this;
+    }
+
+    if(this.right !=null) {
+      curNode = this.right.preOrderSearch(no);
+    }
+
+    return curNode;
+
+  }
+
+  // 后序遍历查找
+  public HeroNode postOrderSearch(int no) {
+    HeroNode curNode = null;
+    if(this.left != null) {
+      curNode = this.left.postOrderSearch(no);
+    }
+
+    if(curNode != null) {
+      return curNode;
+    }
+
+    // 没有找到则递归向右子树遍历查找
+    if(this.right != null) {
+      curNode = this.right.postOrderSearch(no);
+    }
+
+    if(curNode != null) {
+      return curNode;
+    }
+
+    if(this.no == no) {
+      return this;
+    }
+    return curNode;
   }
 
   @Override
