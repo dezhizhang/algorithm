@@ -13,6 +13,7 @@ public class HuffmanCode {
 
     Map<Byte, String> codes = getCodes(huffmanTreeRoot);
 
+
     System.out.println(codes);
 
   }
@@ -20,19 +21,19 @@ public class HuffmanCode {
   public static List<NodeCode> getNodes(byte[] bytes) {
     ArrayList<NodeCode> nodes = new ArrayList<NodeCode>();
 
-    Map<Byte,Integer> counts = new HashMap<>();
+    Map<Byte, Integer> counts = new HashMap<>();
 
-    for(byte b:bytes) {
+    for (byte b : bytes) {
       Integer count = counts.get(b);
-      if(count == null) {
-        counts.put(b,1);
-      }else {
-        counts.put(b,count + 1);
+      if (count == null) {
+        counts.put(b, 1);
+      } else {
+        counts.put(b, count + 1);
       }
     }
 
-    for(Map.Entry<Byte,Integer> entry:counts.entrySet()) {
-      nodes.add(new NodeCode(entry.getKey(),entry.getValue()));
+    for (Map.Entry<Byte, Integer> entry : counts.entrySet()) {
+      nodes.add(new NodeCode(entry.getKey(), entry.getValue()));
     }
     return nodes;
   }
@@ -47,7 +48,7 @@ public class HuffmanCode {
       // 取出第二颗最小的二叉树
       NodeCode rightNode = nodes.get(1);
 
-      NodeCode parent = new NodeCode(null,leftNode.weight + rightNode.weight);
+      NodeCode parent = new NodeCode(null, leftNode.weight + rightNode.weight);
 
       parent.left = leftNode;
       parent.right = rightNode;
@@ -64,7 +65,7 @@ public class HuffmanCode {
 
   // 前序遍历方法
   private static void preOrder(NodeCode root) {
-    if(root == null) {
+    if (root == null) {
       System.out.println("树为空");
       return;
     }
@@ -72,32 +73,57 @@ public class HuffmanCode {
   }
 
   // 赫夫曼编码
-  static Map<Byte,String> huffmanCodes = new HashMap<Byte,String>();
+  static Map<Byte, String> huffmanCodes = new HashMap<Byte, String>();
 
   static StringBuffer stringBuffer = new StringBuffer();
 
-  private static Map<Byte,String> getCodes(NodeCode root) {
-    if(root == null)return null;
+  private static Map<Byte, String> getCodes(NodeCode root) {
+    if (root == null) return null;
     // 处理root的左子树
-    getCodes(root.left,"0",stringBuffer);
+    getCodes(root.left, "0", stringBuffer);
     // 处理root的右子树
-    getCodes(root.right,"1",stringBuffer);
+    getCodes(root.right, "1", stringBuffer);
     return huffmanCodes;
   }
 
   // 将传入的node结点的所有叶子节点赫夫曼编码拼
-  private static void getCodes(NodeCode nodeCode,String code,StringBuffer stringBuffer) {
+  private static void getCodes(NodeCode nodeCode, String code, StringBuffer stringBuffer) {
     StringBuffer stringBuffer2 = new StringBuffer(stringBuffer);
     stringBuffer2.append(code);
-    if(nodeCode != null) {
-      if(nodeCode.data == null) {
-        getCodes(nodeCode.left,"0",stringBuffer2);
-        getCodes(nodeCode.right,"1",stringBuffer2);
-      }else {
+    if (nodeCode != null) {
+      if (nodeCode.data == null) {
+        getCodes(nodeCode.left, "0", stringBuffer2);
+        getCodes(nodeCode.right, "1", stringBuffer2);
+      } else {
         //说明是一个叶子节点
-        huffmanCodes.put(nodeCode.data,stringBuffer2.toString());
+        huffmanCodes.put(nodeCode.data, stringBuffer2.toString());
       }
     }
+  }
+
+  private static void zip(byte[] bytes, Map<Byte, String> huffmanCodes) {
+    StringBuffer stringBuffer = new StringBuffer();
+    for (byte b : bytes) {
+      stringBuffer.append(huffmanCodes.get(b));
+    }
+
+    // 转抱成byte数组
+    int len = (stringBuffer.length() + 7) / 8;
+    byte[] huffmanCodeBytes = new byte[len];
+    int index = 0; // 记录第几个byte
+
+    for (int i = 0; i < stringBuffer.length(); i += 8) {
+      String strByte;
+      if(i + 8 > stringBuffer.length()) {
+        strByte = stringBuffer.substring(i, i);
+      }else {
+        strByte = stringBuffer.substring(i, i + 8);
+      }
+      huffmanCodeBytes[index] = (byte)Integer.parseInt(strByte,index);
+      index++;
+    }
+
+    System.out.println(stringBuffer.toString());
   }
 
 }
@@ -123,13 +149,14 @@ class NodeCode implements Comparable<NodeCode> {
   public String toString() {
     return "Node[data=" + data + "weight=" + weight + "]";
   }
+
   // 前序遍历
   public void preOrder() {
     System.out.println(this);
-    if(this.left != null) {
+    if (this.left != null) {
       this.left.preOrder();
     }
-    if(this.right != null) {
+    if (this.right != null) {
       this.right.preOrder();
     }
   }
