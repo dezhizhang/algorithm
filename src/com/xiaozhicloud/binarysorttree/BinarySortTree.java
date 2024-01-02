@@ -23,6 +23,8 @@ class BinarySortTree{
     }
   }
 
+
+
   // 中序遍历
   public void infixOrder() {
     if(root == null) {
@@ -45,6 +47,50 @@ class Node {
 
   public Node(int value) {
     this.value = value;
+  }
+
+  public Node search(int value) {
+    if(value == this.value) {
+      return  this;
+    }
+
+    // 如果查找的值小于当前节点的值，向左子树递归查找
+    if(value < this.value) {
+      if(this.left == null) {
+        return null;
+      }
+
+      return this.left.search(value);
+    }
+
+    if(value > this.value) {
+      if(this.right == null) {
+        return null;
+      }
+      return  this.right.search(value);
+    }
+
+    return  null;
+  }
+
+  // 查找要删除节点的父节点
+  public Node searchParent(int value) {
+    if((this.left != null && this.left.value == value) ||
+      (this.right != null && this.right.value == value)) {
+      return this;
+    }
+
+    // 左子树递归查找
+    if(value < this.value && this.left != null) {
+      return this.left.searchParent(value);
+    }
+
+    // 右子树递归查找
+    if(value > this.value && this.right != null) {
+      return this.right.searchParent(value);
+    }
+
+    return null;
   }
 
   public void add(Node node) {
