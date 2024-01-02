@@ -8,8 +8,13 @@ public class HuffmanCode {
     byte[] contentBytes = content.getBytes();
 
     List<NodeCode> nodes = getNodes(contentBytes);
-    NodeCode huffmanTree = createHuffmanTree(nodes);
-    preOrder(huffmanTree);
+    NodeCode huffmanTreeRoot = createHuffmanTree(nodes);
+    preOrder(huffmanTreeRoot);
+
+    Map<Byte, String> codes = getCodes(huffmanTreeRoot);
+
+    System.out.println(codes);
+
   }
 
   public static List<NodeCode> getNodes(byte[] bytes) {
@@ -64,6 +69,35 @@ public class HuffmanCode {
       return;
     }
     root.preOrder();
+  }
+
+  // 赫夫曼编码
+  static Map<Byte,String> huffmanCodes = new HashMap<Byte,String>();
+
+  static StringBuffer stringBuffer = new StringBuffer();
+
+  private static Map<Byte,String> getCodes(NodeCode root) {
+    if(root == null)return null;
+    // 处理root的左子树
+    getCodes(root.left,"0",stringBuffer);
+    // 处理root的右子树
+    getCodes(root.right,"1",stringBuffer);
+    return huffmanCodes;
+  }
+
+  // 将传入的node结点的所有叶子节点赫夫曼编码拼
+  private static void getCodes(NodeCode nodeCode,String code,StringBuffer stringBuffer) {
+    StringBuffer stringBuffer2 = new StringBuffer(stringBuffer);
+    stringBuffer2.append(code);
+    if(nodeCode != null) {
+      if(nodeCode.data == null) {
+        getCodes(nodeCode.left,"0",stringBuffer2);
+        getCodes(nodeCode.right,"1",stringBuffer2);
+      }else {
+        //说明是一个叶子节点
+        huffmanCodes.put(nodeCode.data,stringBuffer2.toString());
+      }
+    }
   }
 
 }
