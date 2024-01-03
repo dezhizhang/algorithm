@@ -1,97 +1,15 @@
-package src.com.xiaozhicloud.binarysorttree;
+package src.com.xiaozhicloud.avl;
 
-class BinarySortTreeTest {
+class AvlTreeTest {
   public static void main(String[] args) {
-      int[] arr = {7,3,10,12,5,1,9};
-      BinarySortTree binarySortTree = new BinarySortTree();
-     for(int i=0;i < arr.length;i++) {
-       binarySortTree.add(new Node(arr[i]));
-     }
-
-     binarySortTree.deleteNode(5);
-     binarySortTree.infixOrder();
 
   }
 }
 
-
-class BinarySortTree{
-  private Node root;
-
-  public void add(Node node) {
-    if(root == null) {
-      root = node;
-    }else {
-      root.add(node);
-    }
-  }
-
-  // 中序遍历
-  public void infixOrder() {
-    if(root == null) {
-      System.out.println("二叉排序数为空");
-      return;
-    }
-
-    root.infixOrder();
-  }
-
-  // 查找要删除的节点
-  public Node search(int value) {
-    if(root == null) {
-      return null;
-    }
-
-    return root.search(value);
-  }
-
-  // 查找父节点
-  public Node searchParent(int value) {
-    if(root == null) {
-      return null;
-    }
-    return root.searchParent(value);
-  }
-
-  // 删除节点
-  public void deleteNode(int value) {
-    if(root == null) {
-      System.out.println("节点为空");
-      return;
-    }
-
-    Node targetNode = search(value);
-    if(targetNode == null) {
-      System.out.println("没有找到要删除的节点");
-      return;
-    }
-
-    // 当前这颗二叉树只有一个节点
-    if(root.left == null && root.right == null) {
-      root = null;
-      return;
-    }
-
-    // 要删除的节点是叶子节点
-    Node parent = searchParent(value);
-    if(targetNode.left == null && targetNode.right == null) {
-      if(parent.left != null && parent.left.value == value) {
-        parent.left = null;
-      }else if(parent.right != null && parent.right.value == value) {
-        parent.right = null;
-      }
-    }
-
-  }
-
-
-
+// 创建avlTree
+class  AvlTree{
 
 }
-
-
-
-
 // 创建节点
 class Node {
   int value;
@@ -100,6 +18,26 @@ class Node {
 
   public Node(int value) {
     this.value = value;
+  }
+
+  // 返回左子树的高度
+  public int leftHeight() {
+    if(left == null) {
+      return 0;
+    }
+    return left.height();
+  }
+
+  // 返回右子树的高度
+  public int rightHeight() {
+    if(right == null) {
+      return 0;
+    }
+    return right.height();
+  }
+
+  public int height() {
+    return Math.max(left == null ? 0:left.height(),right == null ? 0:right.height()) + 1;
   }
 
   public Node search(int value) {
@@ -187,3 +125,5 @@ class Node {
     return "Node [value=" + value + "]";
   }
 }
+
+
