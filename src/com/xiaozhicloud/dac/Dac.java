@@ -14,8 +14,6 @@ public class Dac {
       System.out.println("第" + num + "个盘从" + a + "->" + c);
       tower(num - 1, b, a, c);
     }
-
-
   }
 }
 
