@@ -2,7 +2,7 @@ package src.com.xiaozhicloud.binarysearch;
 
 public class BinarySearch {
   public static void main(String[] args) {
-    int[] arr = {1,3,8,10,11,67,100};
+    int[] arr = {1, 3, 8, 10, 11, 67, 100};
     int i = binarySearch(arr, 67);
 
     System.out.println(i);
