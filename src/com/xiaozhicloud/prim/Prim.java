@@ -21,7 +21,8 @@ public class Prim {
     Graph graph = new Graph(vertex);
     MinTree minTree = new MinTree();
     minTree.createGraph(graph, vertex, data, weight);
-    minTree.showGraph(graph);
+//    minTree.showGraph(graph);
+    minTree.prim(graph, 0);
   }
 }
 
@@ -44,6 +45,34 @@ class MinTree {
     for (int[] link : graph.weight) {
       System.out.println(Arrays.toString(link));
     }
+  }
+
+  // prim算法
+  public void prim(Graph graph, int v) {
+    int visited[] = new int[graph.vertex];
+
+    // 标记节点已访问
+    visited[v] = 1;
+
+    int h1 = -1;
+    int h2 = -1;
+
+    int minWeight = 10000;
+    for (int k = 1; k < graph.vertex; k++) {
+      for (int i = 0; i < graph.vertex; i++) {
+        for (int j = 0; j < graph.vertex; j++) {
+          if (visited[i] == 1 && visited[j] == 0 && graph.weight[i][j] < minWeight) {
+            minWeight = graph.weight[i][j];
+            h1 = i;
+            h2 = j;
+          }
+        }
+      }
+      System.out.println("边<" + graph.data[h1] + "," + graph.data[h2] + ">" + "权值" + minWeight);
+      visited[h2] = 1;
+      minWeight = 10000;
+    }
+
   }
 
 }
