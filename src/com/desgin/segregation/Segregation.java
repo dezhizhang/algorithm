@@ -70,3 +70,28 @@ class D implements Interface{
 
   }
 }
+
+class A{
+  public void depend1(Interface i) {
+    i.operation1();
+  }
+  public void depend2(Interface i) {
+    i.operation2();
+  }
+
+  public  void depend3(Interface i) {
+    i.operation3();
+  }
+}
+
+class C{
+  public void depend1(Interface i) {
+    i.operation1();
+  }
+  public void depend4(Interface i) {
+    i.operation4();
+  }
+  public void depend5(Interface i) {
+    i.operation5();
+  }
+}
