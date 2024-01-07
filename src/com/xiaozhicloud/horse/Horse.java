@@ -3,6 +3,7 @@ package src.com.xiaozhicloud.horse;
 import java.awt.*;
 import java.nio.channels.Pipe;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Horse {
   private static int X; // 棋盘的列数
@@ -12,6 +13,29 @@ public class Horse {
   private static boolean finished; // 如果为true表示成功
 
   public static void main(String[] args) {
+    X = 8;
+    Y = 8;
+
+    int row = 1;
+    int column = 1;
+
+    // 创建棋盘
+    int[][] chessboard = new int[X][Y];
+    visited = new boolean[Y * X];
+
+    long start = System.currentTimeMillis();
+    traversalChessboard(chessboard,row - 1,column - 1,1);
+    long end = System.currentTimeMillis();
+
+    System.out.println(end - start);
+
+
+    for(int[] rows:chessboard) {
+      for(int step:rows) {
+        System.out.print(step + "\t");
+      }
+      System.out.println();
+    }
 
   }
 
