@@ -10,7 +10,5 @@ public class Client {
 
     HighBuilding highBuilding = new HighBuilding();
 
-
-
   }
 }
