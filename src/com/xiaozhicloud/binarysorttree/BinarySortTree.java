@@ -2,20 +2,24 @@ package src.com.xiaozhicloud.binarysorttree;
 
 class BinarySortTreeTest {
   public static void main(String[] args) {
-      int[] arr = {7,3,10,12,5,1,9};
-      BinarySortTree binarySortTree = new BinarySortTree();
-     for(int i=0;i < arr.length;i++) {
-       binarySortTree.add(new Node(arr[i]));
-     }
+    int[] arr = {4,3,6,5,7,8};
+    AVLTree avlTree = new AVLTree();
+    for(int i=0;i < arr.length;i++) {
+      avlTree.add(new Node(arr[i]));
 
-     binarySortTree.deleteNode(5);
-     binarySortTree.infixOrder();
+    }
+
+    avlTree.infixOrder();
+    // 求取树的高度
+    System.out.println(avlTree.getRoot().height());
+    System.out.println("左子树的高度"+avlTree.getRoot().leftHeight());
+    System.out.println("右子树的高度" + avlTree.getRoot().rightHeight());
 
   }
 }
 
 
-class BinarySortTree{
+class AVLTree{
   private Node root;
 
   public void add(Node node) {
@@ -34,6 +38,10 @@ class BinarySortTree{
     }
 
     root.infixOrder();
+  }
+
+  public Node getRoot() {
+    return root;
   }
 
   // 查找要删除的节点
@@ -100,6 +108,26 @@ class Node {
 
   public Node(int value) {
     this.value = value;
+  }
+
+  // 返回左子树高度
+  public  int leftHeight() {
+    if(left == null) {
+      return 0;
+    }
+    return left.height();
+  }
+  // 返回右子树的高度
+  public int rightHeight() {
+    if(right == null) {
+      return 0;
+    }
+    return right.height();
+  }
+
+  // 反回右子树的高度
+  public int height() {
+    return Math.max(left == null ? 0:left.height(),right == null ? 0:right.height()) + 1;
   }
 
   public Node search(int value) {
