@@ -130,6 +130,21 @@ class Node {
     return Math.max(left == null ? 0:left.height(),right == null ? 0:right.height()) + 1;
   }
 
+  private void leftRotate() {
+    Node newNode = new Node(value);
+    newNode.left = left;
+
+    newNode.right = right.left;
+    // 把
+    value = right.value;
+    // 把当前节点的右子树设置成当前节点的右子树
+    right = right.right;
+    // 把当前节点的左子树设置成新的节点
+    left = newNode;
+
+
+  }
+
   public Node search(int value) {
     if(value == this.value) {
       return  this;
